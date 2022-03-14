@@ -5,11 +5,13 @@
 
 int main()
 {
+    int w = 1000, h = 1000;
     SDL_Window* wind;
     SDL_Renderer* rend;
-    SDL_CreateWindowAndRenderer(1000, 1000, SDL_WINDOW_SHOWN, &wind, &rend);
+    SDL_CreateWindowAndRenderer(w, h, SDL_WINDOW_SHOWN, &wind, &rend);
     SDL_Event e;
     bool end = false;
+    vector2d offset(w/2, h/2);
 
     while (!end)
     {
@@ -18,13 +20,17 @@ int main()
             if(e.type == SDL_QUIT)
                 end = true;
         }
-        for(int x = 0; x < 1000; x++)
-        for(int y = 0; y < 1000; y++)
+        SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
+        SDL_RenderClear(rend);
+        SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
+        for(int i = 0; i < 10; i++)
         {
-            float c = 255;
-            SDL_SetRenderDrawColor(rend, c, c, c, 255);
-            SDL_RenderDrawPoint(rend, x, y);
+            vector2d a = randUnit(i);
+            a *= double(rand()) / RAND_MAX * 200 + 100;
+            a += offset;
+            SDL_RenderDrawLine(rend, offset.x, offset.y, a.x, a.y);
         }
+
         SDL_RenderPresent(rend);
     }
 }
