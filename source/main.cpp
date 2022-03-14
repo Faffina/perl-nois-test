@@ -26,7 +26,6 @@ int main()
         for(int i = 0; i < 10; i++)
         {
             vector2d a = randUnit(i);
-            a *= double(rand()) / RAND_MAX * 200 + 100;
             a += offset;
             SDL_RenderDrawLine(rend, offset.x, offset.y, a.x, a.y);
         }
