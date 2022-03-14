@@ -106,3 +106,8 @@ vector2d vector2d::normal()
     *this /= mod();
     return *this;
 }
+
+vector2d intVector(const vector2d& a)
+{
+    return vector2d(int(a.x), int(a.y));
+}

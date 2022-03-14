@@ -2,10 +2,11 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 #include "vector2d.h"
+#include "perl.h"
 
 int main()
 {
-    int w = 1000, h = 1000;
+    int w = 100, h = 100;
     SDL_Window* wind;
     SDL_Renderer* rend;
     SDL_CreateWindowAndRenderer(w, h, SDL_WINDOW_SHOWN, &wind, &rend);
@@ -20,16 +21,14 @@ int main()
             if(e.type == SDL_QUIT)
                 end = true;
         }
-        SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
-        SDL_RenderClear(rend);
-        SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
-        for(int i = 0; i < 10; i++)
+        for(int x = 0; x < w; x++)
+        for(int y = 0; y < w; y++)
         {
-            vector2d a = randUnit(i);
-            a += offset;
-            SDL_RenderDrawLine(rend, offset.x, offset.y, a.x, a.y);
+            std::cerr << prelin(vector2d(x, y)) << '\n';
+            int c = prelin(vector2d(x + 0.5, y + 0.5)) * 255;
+            SDL_SetRenderDrawColor(rend, c, c, c, 255);
+            SDL_RenderDrawPoint(rend, x, y);
         }
-
         SDL_RenderPresent(rend);
     }
 }
