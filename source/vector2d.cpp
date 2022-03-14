@@ -61,7 +61,7 @@ vector2d operator+(const vector2d& a, const vector2d& b)
 
 vector2d operator-(const vector2d& a, const vector2d& b)
 {
-    return vector2d(a.x - b.x, a.y - a.y);
+    return vector2d(a.x - b.x, a.y - b.y);
 }
 
 vector2d operator/(const vector2d& a, double b)
@@ -79,16 +79,18 @@ vector2d polarCor(const double r, const double the)
     return vector2d(r*cos(the), r*sin(the));
 }
 
-vector2d randUnit()
+vector2d randUnit(const vector2d& a0)
 {
-    return randUnit(time(0));
-}
-
-vector2d randUnit(int t)
-{
-    srand(t);
-    double the = (double(rand()) / RAND_MAX) * 2 * M_PI;
-    return polarCor(1, the);
+    const unsigned w = 8 * sizeof(unsigned);
+    const unsigned s = w / 2; // rotation width
+    unsigned a = a0.x, b = a0.y;
+    a *= 3284157443; b ^= a << s | a >> w-s;
+    b *= 1911520717; a ^= b << s | b >> w-s;
+    a *= 2048419325;
+    float random = a * (3.14159265 / ~(~0u >> 1)); // in [0, 2*Pi]
+    vector2d v;
+    v.x = cos(random); v.y = sin(random);
+    return v;
 }
 
 double vector2d::mod2()

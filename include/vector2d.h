@@ -26,6 +26,5 @@ vector2d operator*(const vector2d& a, double b);
 vector2d operator/(const vector2d& a, double b);
 vector2d polarCor(const double r, const double the);
 vector2d intVector(const vector2d& a);
-vector2d randUnit();
-vector2d randUnit(int t);
+vector2d randUnit(const vector2d& a0);
 

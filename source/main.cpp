@@ -6,14 +6,13 @@
 
 int main()
 {
-    int w = 100, h = 100;
+    int w = 1000, h = 1000;
     SDL_Window* wind;
     SDL_Renderer* rend;
     SDL_CreateWindowAndRenderer(w, h, SDL_WINDOW_SHOWN, &wind, &rend);
     SDL_Event e;
     bool end = false;
     vector2d offset(w/2, h/2);
-
     while (!end)
     {
         while (SDL_PollEvent(&e))
@@ -21,13 +20,13 @@ int main()
             if(e.type == SDL_QUIT)
                 end = true;
         }
+        SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
+        SDL_RenderClear(rend);
         for(int x = 0; x < w; x++)
-        for(int y = 0; y < w; y++)
         {
-            std::cerr << prelin(vector2d(x, y)) << '\n';
-            int c = prelin(vector2d(x + 0.5, y + 0.5)) * 255;
-            SDL_SetRenderDrawColor(rend, c, c, c, 255);
-            SDL_RenderDrawPoint(rend, x, y);
+            int c = prelin(vector2d(double(x) / 100, double(0.5) / 100))*255;
+            SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
+            SDL_RenderDrawPoint(rend, x, h/2 + c);
         }
         SDL_RenderPresent(rend);
     }
